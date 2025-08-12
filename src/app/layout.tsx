@@ -6,6 +6,9 @@ import {
 } from "@mantine/core";
 import theme from "./theme";
 import "./globals.css";
+import ReduxProvider from "@/providers/redux";
+import { Toaster } from "react-hot-toast";
+import { ModalsProvider } from "@mantine/modals";
 
 export const metadata: Metadata = {
   title: "Next App Mantine Tailwind Template",
@@ -21,9 +24,25 @@ export default function RootLayout({
     <html lang="en" {...mantineHtmlProps}>
       <head>
         <ColorSchemeScript />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+        />
       </head>
       <body className="antialiased" suppressHydrationWarning>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <ReduxProvider>
+          <MantineProvider theme={theme}>
+            <ModalsProvider
+            // modals={{
+            //   confirm: ConfirmModal,
+            // }}
+            >
+              {children}
+            </ModalsProvider>
+            <Toaster />
+          </MantineProvider>
+        </ReduxProvider>
       </body>
     </html>
   );
